@@ -9,7 +9,7 @@ function TestCardPrimary({ data, ...rest }) {
     <>
       <Title>{data.subtitle}</Title>
       <Container {...rest}>
-        <MaterialIcons name="assignment-ind" size={38} color={colors.green} />
+        <MaterialIcons name="align-horizontal-left" size={38} color={colors.green} />
         <LabelCard>{data.title}</LabelCard>
       </Container>
     </>

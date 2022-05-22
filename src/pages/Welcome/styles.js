@@ -39,7 +39,7 @@ export const Button = styled.TouchableOpacity`
   background-color: ${colors.green};
   justify-content: center;
   align-items: center;
-  border-radius: 16px;
+  border-radius: 15px;
   width: 56px;
   height: 56px;
 `;

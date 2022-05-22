@@ -1,17 +1,11 @@
 import React, { useEffect } from "react";
 import * as Notifications from "expo-notifications";
-import {
-  useFonts,
-  Jost_400Regular,
-  Jost_600SemiBold,
-} from "@expo-google-fonts/jost";
+import { useFonts, Jost_400Regular, Jost_600SemiBold, } from "@expo-google-fonts/jost";
 import AppLoading from "expo-app-loading";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { Routes } from "./src/routes/stack.routes";
-
-import { PlantProps } from "./src/libs/storage";
-
+console.disableYellowBox = true;
 export default function App() {
   let [fontsLoaded] = useFonts({
     Jost_400Regular,
@@ -29,8 +23,7 @@ export default function App() {
 
     const subscription = Notifications.addNotificationReceivedListener(
       async (notification) => {
-        const data = notification.request.content.data.plant;
-        console.log(data);
+        console.log("data");
       }
     );
 

@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { navigationRoute } from "../../utils/navigation";
 
 import { Container, Content, Title, ImageContent, SubTitle, Button, } from "./styles";
 
 import wateringImg from "../../assets/siddisc.png";
+import { getData } from "../../libs/storage";
 
 function Welcome() {
   const navigation = navigationRoute();
   const [userOk, setUserOk] = useState(false);
 
-  useEffect(async () => {
-    const user = JSON.parse(await AsyncStorage.getItem("@siddmanager:user"));
-    if (user)
-      setUserOk(true);
+  useEffect(() => {
+    async function loadStorageUserName() {
+      const user = await getData();
+      if (user != null)
+        setUserOk(true);
+    }
+
+    loadStorageUserName();
   }, [])
 
   function handleStart() {

@@ -4,7 +4,7 @@ import { colors, fonts } from "../../theme";
 export const Container = styled.TouchableOpacity`
   background-color: ${colors.green};
   height: 56px;
-  border-radius: 16px;
+  border-radius: 15px;
   align-items: center;
   justify-content: center;
 `;

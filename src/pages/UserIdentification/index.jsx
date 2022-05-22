@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Keyboard,
-  Platform,
-  TouchableWithoutFeedback,
-  Alert,
-} from "react-native";
+import { Keyboard, Platform, TouchableWithoutFeedback, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Button } from "../../components/Button";
@@ -16,6 +11,7 @@ import { api, endpoints } from "../../services/api";
 import { Container, KeyboardAvoidingView, Content, Form, Header, Title, Input, Footer, LottieViewAnimation } from "./styles";
 
 import loadAnimation from "../../assets/load.json";
+import { AUTH_DATA_KEY } from "../../libs/storage";
 
 function UserIdentification() {
   const navigation = navigationRoute();
@@ -61,7 +57,7 @@ function UserIdentification() {
         password: pass
       }).then(async function (result) {
         if (result.data.statusCode === 200) {
-          await AsyncStorage.setItem("@siddmanager:user", JSON.stringify(result.data.response));
+          await AsyncStorage.setItem(AUTH_DATA_KEY, JSON.stringify(result.data.response));
 
           navigation.replace("TestSelect");
         } else {

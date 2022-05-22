@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
+import { Picker } from '@react-native-picker/picker';
 
 import { Load } from "../../components/Load";
 import { Header } from "../../components/Header";
 import { TestCardPrimary } from "../../components/TestCardPrimary";
 
-import { api } from "../../services/api";
 import { navigationRoute } from "../../utils/navigation";
+import { api, endpoints } from "../../services/api";
 
-import { Container, HeaderContent, Title, SubTitle, Tests, LottieViewAnimation } from "./styles";
-import { colors } from "../../theme";
+import { Container, HeaderContent, Title, SubTitle, Tests } from "./styles";
 
 function TestSelect() {
   const navigation = navigationRoute();
 
   const [TestsList, setTestsList] = useState([]);
+  const [patient, setPatient] = useState([]);
+  const [patientSelected, setPatientSelected] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,8 +52,22 @@ function TestSelect() {
     }];
     setTestsList(Test);
 
+    async function loadPatients() {
+      var result = await api.post(`${endpoints.user.getPatients}`, null);
+      if (result.data.statusCode === 200) {
+        setPatient(result.data.response.data);
+      }
+    }
+
+    loadPatients();
+
     setLoading(false);
   }, [])
+
+  async function testSelected(key) {
+    if (key == 1)
+      navigation.navigate("TestMain");
+  }
 
   return (
     <Container>
@@ -66,16 +82,21 @@ function TestSelect() {
         <Load />
         :
         <ScrollView style={{ marginTop: 10 }}>
-          <Tests>
-            {TestsList.map((item) => <TestCardPrimary key={item.key} data={item} />)}
-            {/* <FlatList
-            data={TestsList}
-            renderItem={({ item }) => (<TestCardPrimary data={item} />)}
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            onEndReachedThreshold={0.1}
-          /> */}
-          </Tests>
+          {patientSelected == null ?
+            <Tests>
+              <Title>Selecione um paciente</Title>
+              <Picker onValueChange={(itemValue) => { if (itemValue != "null") { setPatientSelected(itemValue) } }}>
+                <Picker.Item label="Nenhum selecionado" value="null" />
+                {patient && patient.map((e) => {
+                  return <Picker.Item label={e.firstName + " " + e.lastName} value={e.id} key={e.id} />;
+                })}
+              </Picker>
+            </Tests>
+            :
+            <Tests>
+              {TestsList.map((item) => <TestCardPrimary onPress={() => testSelected(item.key)} key={item.key} data={item} />)}
+            </Tests>
+          }
         </ScrollView>
       }
     </Container>

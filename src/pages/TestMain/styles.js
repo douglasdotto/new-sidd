@@ -19,6 +19,10 @@ export const Title = styled.Text`
   margin-top: 15px;
 `;
 
+export const Title2 = styled.Text`
+  color: ${colors.green};
+`;
+
 export const SubTitle = styled.Text`
   font-size: 17px;
   font-family: ${fonts.text};

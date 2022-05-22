@@ -14,7 +14,7 @@ export const Container = styled.TouchableOpacity`
 export const LabelCard = styled.Text`
   color: ${colors.body_dark};
   font-family: ${fonts.text};
-  margin: 16px 0px 16px 10px;
+  margin: 16px 40px 16px 10px;
 `;
 
 export const Title = styled.Text`
